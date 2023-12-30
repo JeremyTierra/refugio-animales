@@ -19,7 +19,7 @@ public class AnimalController {
 
     @GetMapping
     public ResponseEntity<Page<AnimalEntity>> getAll(@RequestParam(defaultValue = "0") int page,
-                                                     @RequestParam(defaultValue = "8") int elements) {
+                                                     @RequestParam(defaultValue = "12") int elements) {
         return ResponseEntity.ok(this.animalService.getAll(page, elements));
     }
 
@@ -27,7 +27,7 @@ public class AnimalController {
     public ResponseEntity<Page<AnimalEntity>> getAllByBreed(
             @PathVariable String breed,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int elements) {
+            @RequestParam(defaultValue = "12") int elements) {
         return ResponseEntity.ok(animalService.getAllByBreed(breed, page, elements));
     }
 
@@ -35,7 +35,7 @@ public class AnimalController {
     public ResponseEntity<Page<AnimalEntity>> getAllByType(
             @PathVariable String type,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int elements) {
+            @RequestParam(defaultValue = "12") int elements) {
         return ResponseEntity.ok(animalService.getAllByType(type, page, elements));
     }
 
@@ -44,7 +44,7 @@ public class AnimalController {
             @PathVariable int minAge,
             @PathVariable int maxAge,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int elements) {
+            @RequestParam(defaultValue = "12") int elements) {
         return ResponseEntity.ok(animalService.getAllByAgeRange(minAge, maxAge, page, elements));
     }
 
@@ -52,7 +52,7 @@ public class AnimalController {
     public ResponseEntity<Page<AnimalEntity>> getAllByAge(
             @PathVariable int age,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int elements) {
+            @RequestParam(defaultValue = "12") int elements) {
         return ResponseEntity.ok(animalService.getAllByAge(age, page, elements));
     }
 
@@ -75,5 +75,15 @@ public class AnimalController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (id != null && this.animalService.exists(id)) {
+            this.animalService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }

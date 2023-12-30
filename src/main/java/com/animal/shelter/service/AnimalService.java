@@ -50,4 +50,7 @@ public class AnimalService {
     public AnimalEntity save(AnimalEntity animal) {
         return this.animalRepository.save(animal);
     }
+    public void deleteById(int id) {
+        this.animalRepository.deleteById(id);
+    }
 }
